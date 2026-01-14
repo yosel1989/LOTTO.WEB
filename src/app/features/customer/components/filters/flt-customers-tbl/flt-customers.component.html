@@ -1,0 +1,310 @@
+<div class="card text-xs!">
+    <p-panel [toggleable]="true" class="text-xs! rounded-xl! border-none!">
+        <ng-template #header>
+                Filtrar
+        </ng-template>
+        <form [formGroup]="frmFilterCustomer" class="border-t-3 border-t-gray-600">
+            <div class="grid grid-cols-1 sm:grid-cols-2! md:grid-cols-4! xl:grid-cols-6! gap-2 pt-3">
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Fecha de registro
+                        </label>
+                        <p-datepicker
+                            formControlName="createdAt"
+                            size="small" 
+                            fluid
+                            [showOnFocus]="true" 
+                            [showButtonBar]="true"
+                            placeholder="Todo"
+                            [readonlyInput]="true"
+                            inputStyleClass="text-xs!"
+                            [iconDisplay]="'input'" 
+                            [showIcon]="true"
+                            panelStyleClass="text-xs!"
+                            [touchUI]="isMobile"
+                            />
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Nombre de usuario
+                        </label>
+                        <p-iconfield>
+                            <input 
+                            formControlName="userName"
+                            #username 
+                            pInputText 
+                            fluid 
+                            type="text" 
+                            pSize="small" 
+                            maxlength="500" 
+                            autofocus="true" 
+                            class="text-xs!"/>
+                            @if(username.value){<p-inputicon class="pi pi-times" (click)="username.value=''" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        ID Jugador
+                        </label>
+                        <p-iconfield>
+                            <input 
+                            formControlName="idCustomer"
+                            #idplayer 
+                            pInputText 
+                            fluid 
+                            type="text" 
+                            pSize="small" 
+                            maxlength="500" 
+                            autofocus="true" 
+                            class="text-xs!"/>
+                             @if(idplayer.value){<p-inputicon class="pi pi-times" (click)="idplayer.value=''" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                            Departamento
+                        </label>
+                        <p-select 
+                        size="small"
+                        fluid 
+                        [options]="departments.value()"  
+                        formControlName="idDepartment"
+                        placeholder="Todo" 
+                        optionLabel="name" 
+                        optionValue="code" 
+                        inputId="text-xs"
+                        [showClear]="true"
+                        filter="true"
+                        [overlayOptions]="getOverlayOptions"
+                        [loading]="departments.isLoading()"
+                        class="w-full" >
+                            <ng-template pTemplate="header">
+                                @if(isMobile){<div class="p-text-bold p-3 text-sm border-b surface-border">
+                                Selecciona una departamento
+                                </div>}
+                            </ng-template>
+                        </p-select>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Provincia
+                        </label>
+                        <p-select 
+                        size="small" 
+                        fluid
+                        [options]="provinces.value()"  
+                        formControlName="idProvince"
+                        placeholder="Todo" 
+                        optionLabel="name" 
+                        optionValue="code" 
+                        inputId="text-xs"
+                        [showClear]="true"
+                        filter="true"
+                        [loading]="provinces.isLoading()"
+                        [overlayOptions]="getOverlayOptions"
+                        class="w-full" >
+                            <ng-template pTemplate="header">
+                                @if(isMobile){<div class="p-text-bold p-3 text-sm border-b surface-border">
+                                Selecciona una provincia
+                                </div>}
+                            </ng-template>
+                        </p-select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Distrito
+                        </label>
+                        <p-select size="small" 
+                        [options]="districts.value()"  
+                        formControlName="idDistrict"
+                        placeholder="Todo" 
+                        optionLabel="name" 
+                        optionValue="code" 
+                        inputId="text-xs"
+                        [showClear]="true"
+                        filter="true"
+                        [loading]="districts.isLoading()"
+                        [overlayOptions]="getOverlayOptions"
+                        class="w-full" >
+                            <ng-template pTemplate="header">
+                                @if(isMobile){<div class="p-text-bold p-3 text-sm border-b surface-border">
+                                Selecciona una distrito
+                                </div>}
+                            </ng-template>
+                        </p-select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Última fecha de inicio de sesión
+                        </label>
+                        <p-datepicker
+                            formControlName="lastLoginDate"
+                            size="small" 
+                            fluid
+                            [showOnFocus]="true" 
+                            [showButtonBar]="true"
+                            placeholder="Todo"
+                            [readonlyInput]="true"
+                            inputStyleClass="text-xs!"
+                            [iconDisplay]="'input'" 
+                            [showIcon]="true"
+                            panelStyleClass="text-xs!"
+                            [touchUI]="isMobile"
+                            />
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Fecha de verificación
+                        </label>
+                        <p-datepicker
+                            formControlName="verifiedAt"
+                            size="small" 
+                            fluid
+                            [showOnFocus]="true" 
+                            [showButtonBar]="true"
+                            placeholder="Todo"
+                            [readonlyInput]="true"
+                            inputStyleClass="text-xs!"
+                            [iconDisplay]="'input'" 
+                            [showIcon]="true"
+                            panelStyleClass="text-xs!"
+                            [touchUI]="isMobile"
+                            />
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Nombre
+                        </label>
+                        <p-iconfield>
+                            <input 
+                            formControlName="firstName"
+                            #firstnameplayer 
+                            pInputText 
+                            fluid 
+                            type="text" 
+                            pSize="small" 
+                            maxlength="500" 
+                            autofocus="true" 
+                            class="text-xs!"/>
+                             @if(firstnameplayer.value){<p-inputicon class="pi pi-times" (click)="firstnameplayer.value=''" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Apellido
+                        </label>
+                        <p-iconfield>
+                            <input 
+                            formControlName="lastName"
+                            #lastnameplayer 
+                            pInputText 
+                            fluid 
+                            type="text" 
+                            pSize="small" 
+                            maxlength="500" 
+                            autofocus="true" 
+                            class="text-xs!"/>
+                             @if(lastnameplayer.value){<p-inputicon class="pi pi-times" (click)="lastnameplayer.value=''" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                            Genero
+                        </label>
+                        <p-select
+                        formControlName="idGender"
+                        size="small"
+                        [options]="genders.value()"  
+                        placeholder="Todo" 
+                        optionLabel="name" 
+                        optionValue="id" 
+                        inputId="text-xs"
+                        [showClear]="true"
+                        [overlayOptions]="getOverlayOptions"
+                        [loading]="genders.isLoading()"
+                        class="w-full" >
+                            <ng-template pTemplate="header">
+                                @if(isMobile){<div class="p-text-bold p-3 text-sm border-b surface-border">
+                                Seleccione un genero
+                                </div>}
+                            </ng-template>
+                        </p-select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Email
+                        </label>
+                        <p-iconfield>
+                            <input 
+                            formControlName="email"
+                            #emailplayer 
+                            pInputText 
+                            fluid 
+                            type="email" 
+                            pSize="small" 
+                            maxlength="500" 
+                            autofocus="true" 
+                            class="text-xs!"/>
+                             @if(emailplayer.value){<p-inputicon class="pi pi-times" (click)="emailplayer.value=''" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Fecha de nacimiento
+                        </label>
+                        <p-datepicker
+                            formControlName="birthDate"
+                            size="small" 
+                            fluid
+                            [showOnFocus]="true" 
+                            [showButtonBar]="true"
+                            placeholder="Todo"
+                            [readonlyInput]="true"
+                            inputStyleClass="text-xs!"
+                            [iconDisplay]="'input'" 
+                            [showIcon]="true"
+                            panelStyleClass="text-xs!"
+                            [touchUI]="isMobile"
+                            />
+                    </div>
+                </div>
+
+            </div>
+        </form>
+        
+    </p-panel>
+</div>
+

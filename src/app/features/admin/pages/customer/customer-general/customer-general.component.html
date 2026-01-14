@@ -1,0 +1,97 @@
+<p-tabs [(value)]="activeTabValue" class="vertical" (onChange)="evtOnTabChange($event)" (valueChange)="evtOnTabChange($event)">
+    <p-tablist class="tablist-vertical ps-4 pt-4">
+        @for(tab of tabs; track tab.value){
+            <p-tab [disabled]="tab.disabled" [value]="tab.value" class="py-2! font-light! text-xs! text-mono w-full">
+                <span class="font-semibold">{{ tab.label }}</span>
+            </p-tab>
+        }
+    </p-tablist>
+    <p-tabpanels class="min-h-screen!">
+        <p-tabpanel value="0">
+            @if(activeTabValue === '0'){
+                <app-tabpanel-customer-info [uuid]="customerId"></app-tabpanel-customer-info>
+            }  
+        </p-tabpanel>
+        <p-tabpanel value="1">
+            <p class="m-0">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+                aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+                dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius
+                modi.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="2">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="3">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="4">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="5">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="6">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="7">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="8">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+        <p-tabpanel value="9">
+            <p class="m-0">
+                At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
+                atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique
+                sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum
+                facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
+                impedit quo minus.
+            </p>
+        </p-tabpanel>
+    </p-tabpanels>
+</p-tabs>

@@ -1,0 +1,202 @@
+<div class="card text-xs!">
+    <p-panel [toggleable]="true" class="text-xs! rounded-xl! border-none!">
+        <ng-template #header>
+            Busqueda avanzada
+        </ng-template>
+        <form [formGroup]="frmFilter" class="border-t-3 border-t-gray-600">
+            <div class="grid grid-cols-1 sm:grid-cols-2! md:grid-cols-4! xl:grid-cols-6! gap-2 pt-3">
+                
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Fecha
+                        </label>
+                        <app-flt-order-created-at-tbl 
+                        #createdAtFilter 
+                        title="Filtrar fecha"
+                        column="created_at"
+                        (OnValuesChange)="evtChangeValuesFilters($event)"></app-flt-order-created-at-tbl>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        N° Orden
+                        </label>
+                        <p-iconfield>
+                            <p-inputnumber
+                            formControlName="number"
+                            fluid 
+                            mode="decimal"
+                            useGrouping="false"
+                            size="small"
+                            inputStyleClass="text-xs!"/>
+                             @if(frmFilter.get('number')?.value !== null){<p-inputicon class="pi pi-times text-xs!" (click)="frmFilter.get('number')?.setValue(null)" />}
+                        </p-iconfield>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Estado
+                        </label>
+                        <p-select 
+                        fluid
+                        size="small"
+                        [options]="statuses"
+                        formControlName="status"
+                        placeholder="Todo"
+                        optionLabel="label"
+                        optionValue="enum" 
+                        [showClear]="true"
+                        [loading]="false"
+                        [overlayOptions]="getOverlayOptions"
+                        class="text-xs h-[30px]!" 
+                        panelStyleClass="text-xs">
+                            <ng-template pTemplate="header">
+                                @if(isMobile){<div class="p-text-bold p-3 text-sm border-b surface-border">
+                                Selecciona una estado
+                                </div>}
+                            </ng-template>
+                        </p-select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Nombre del cliente
+                        </label>
+                        <app-flt-order-customer-tbl 
+                        #customerFilter 
+                        title="Filtrar nombre del cliente"
+                        column="customer"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-customer-tbl>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Registrado | Por Local
+                        </label>
+                        <app-flt-order-locales-created-tbl
+                        #localCreatedAtFilter 
+                        title="Filtrar Registrado | Por Local"
+                        placeholder="Seleccionar local"
+                        column="created_local_id"
+                        [datafnc]="getLocalesCreated()"
+                        optionLabel="name"
+                        optionValue="id"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-locales-created-tbl>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Registrado | Por
+                        </label>
+                        <app-flt-order-employees-created-tbl 
+                        #employeeCreatedAtFilter 
+                        title="Filtrar Registrado | Por"
+                        placeholder="Seleccionar personal"
+                        column="employee_id"
+                        [datafnc]="getEmployessCreated()"
+                        optionLabel="full_name"
+                        optionValue="id"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-employees-created-tbl>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Registrado | Por Usuario
+                        </label>
+                        <app-flt-order-users-created-tbl 
+                        #userCreatedAtFilter 
+                        title="Filtrar Registrado | Por Usuario"
+                        placeholder="Seleccionar usuario"
+                        column="user_id"
+                        [datafnc]="getUsersCreated()"
+                        optionLabel="username"
+                        optionValue="id"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-users-created-tbl>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Origen
+                        </label>
+                        <app-flt-order-origin-tbl 
+                        #orderOriginFilter 
+                        title="Filtrar por Origen"
+                        placeholder="Seleccionar origen"
+                        column="origin"
+                        [datafnc]="getOriginsCreated()"
+                        optionLabel="origin"
+                        optionValue="enum"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-origin-tbl>
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Tipo Pago
+                        </label>
+                        <app-flt-order-payment-type-tbl 
+                        #orderPaymentTypeFilter 
+                        title="Filtrar por Tipo Pago"
+                        placeholder="Seleccionar tipo pago"
+                        column="payment_type"
+                        [datafnc]="getPaymentTypes()"
+                        optionLabel="type"
+                        optionValue="enum"
+                        (OnValueChange)="evtChangeValuesFilters($event)"
+                        ></app-flt-order-payment-type-tbl>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-row gap-1 mt-3">
+                <!--<p-button 
+                size="small"
+                outlined="true"
+                icon="pi pi-filter" 
+                label="Aplicar" 
+                styleClass="h-[30px]!"
+                pTooltip="Aplicar filtros" 
+                tooltipPosition="top"
+                tooltipStyleClass="text-xs!"
+                placeholder="Top"></p-button>-->
+                <p-button 
+                size="small"
+                outlined="true"
+                severity="danger"
+                icon="pi pi-filter-slash" 
+                label="Limpiar todo" 
+                styleClass="h-[30px]!"
+                pTooltip="Quitar filtros" 
+                tooltipPosition="top"
+                tooltipStyleClass="text-xs!"
+                placeholder="Top"
+                (click)="evtClearAll()"></p-button>
+            </div>  
+        </form>
+        
+    </p-panel>
+</div>
+

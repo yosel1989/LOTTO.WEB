@@ -1,0 +1,23 @@
+<p-breadcrumb [model]="items" [home]="home" styleClass="py-2! font-light! text-xs! text-mono shadow-lg sticky top-[70px] z-1">
+    <ng-template #item let-item>
+        <a class="cursor-pointer" [routerLink]="item.routerLink" class="flex items-center">
+            @if(item.icon){<span [class]="item.icon + ' me-2 font-light! p-breadcrumb-item-icon'"></span>} {{ item.label }}
+        </a>
+    </ng-template>
+    <ng-template #separator> <i class="pi pi-angle-right"></i> </ng-template>
+</p-breadcrumb>
+
+
+<p-tabs scrollable class="shadow-lg! relative">
+    <p-tablist>
+        @for(tab of tabs; track tab.route){
+            <p-tab [value]="tab.route" [disabled]="tab.disable" [routerLink]="tab.route" routerLinkActive="p-tab-active" class="py-2! font-light! text-xs! text-mono">
+                <span class="font-semibold">{{ tab.label }}</span>
+            </p-tab>
+        }
+    </p-tablist>
+</p-tabs>
+
+
+
+<router-outlet></router-outlet>

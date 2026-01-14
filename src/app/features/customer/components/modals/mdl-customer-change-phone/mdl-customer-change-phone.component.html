@@ -1,0 +1,70 @@
+<form (ngSubmit)="evtOnSubmit()" class="pt-1">
+    <div class="flex flex-col gap-3">
+        <p-message size="small" severity="warn" variant="outlined" class="font-light! text-xs!" styleClass="font-light!">
+            <div class="flex flex-col">
+                <div class="text-lg!">{{ data.nombre }} {{data.apellido_paterno}} {{data.apellido_materno}}</div>
+            </div>
+        </p-message>
+
+        <div class="flex flex-row mb-2">
+            <p-inputgroup>
+                <p-select [options]="countries" [formControl]="ctlPhonePrefix" optionLabel="name" optionValue="prefix" [filter]="false" class="w-auto!" [showClear]="false" appendTo="body">
+                    <ng-template #selectedItem let-selectedOption>
+                        <div class="flex items-center">
+                            <div>{{ selectedOption.prefix }}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template let-country #item>
+                        <div class="flex items-center gap-2">
+                            <img [src]="'https://flagcdn.com/' + country.code.toLowerCase() + '.svg'" [class]="'flag flag-' + country.code.toLowerCase()" style="width: 18px" />
+                            <div>{{ country.name }}</div>
+                            <div>({{ country.prefix }})</div>
+                        </div>
+                    </ng-template>
+                </p-select>
+                <p-inputnumber fluid="" class="w-full!" [formControl]="ctlPhoneNumber" [useGrouping]="false" maxlenght="15" [minFractionDigits]="0" [maxFractionDigits]="0"/>
+            </p-inputgroup>
+        </div>
+
+        <div class="flex flex-col gap-1 mb-2">
+            <label class="kt-form-label font-normal text-mono">
+            Detalle / Motivo *
+            </label>
+            <textarea pSize="small" pTextarea [formControl]="contrlDescription" maxlength="250" class="h-[100px]"></textarea>
+            @if (contrlDescription.invalid && isSubmitted) {
+                <p-message severity="error" size="small" variant="simple">
+                @if (contrlDescription.hasError('maxLength')) {
+                    El detalle no debe exceder los 250 caracteres.
+                }
+                </p-message>
+            }
+        </div>
+    </div>
+    
+    <div class="flex justify-end gap-2">
+        <p-button type="reset" icon="pi pi-times" size="small" label="Cancelar" severity="secondary" (click)="evtOnClose()"/>
+        <p-button type="submit" icon="pi pi-send" size="small" [label]="ldSubmit ? 'Cargando...' : 'Guardar cambios '" [loading]="ldSubmit" severity="primary" />
+    </div>
+    
+</form>
+
+
+<div class="card flex justify-center">
+    <p-confirmdialog #cd>
+        <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+            <div class="flex flex-col items-center p-8 bg-surface-900 rounded-xl">
+                <div
+                    class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+                >
+                    <i class="pi pi-question !text-5xl"></i>
+                </div>
+                <span class="font-bold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+                <p class="mb-0">{{ message.message }}</p>
+                <div class="flex items-center gap-2 mt-6">
+                    <p-button label="Aceptar" (onClick)="onAccept()" styleClass="w-32"></p-button>
+                    <p-button label="Cancelar" [outlined]="true" (onClick)="onReject()" styleClass="w-32"></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-confirmdialog>
+</div>

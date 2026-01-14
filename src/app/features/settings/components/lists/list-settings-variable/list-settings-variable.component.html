@@ -1,0 +1,150 @@
+<p-toolbar class="rounded-none! border-0! bg-transparent! px-0!">
+      <ng-template #start>
+        <div class="flex items-center gap-1">
+            <p-button 
+            size="small"
+            icon="pi pi-angle-left text-xs!" 
+            size="small" 
+            [disabled]="isFirstPage()"
+            [outlined]="true"
+            severity="secondary"
+            pTooltip="Anterior"
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtPrev()"
+            />
+            <p-button icon="pi pi-refresh text-xs!" 
+            size="small"  
+            severity="secondary" 
+            [outlined]="true"
+            pTooltip="Actualizar" 
+            tooltipPosition="top" 
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtOnReload()"
+            />
+            <p-button 
+            icon="pi pi-angle-right text-xs!" 
+            size="small" 
+            [disabled]="isLastPage()"
+            [outlined]="true"
+            severity="secondary"
+            pTooltip="Siguiente"
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtNext()"
+            />
+            <p-divider layout="vertical" size="small" class="h-[20px]! mx-1!" align="center"/>
+            <p-button 
+            icon="pi pi-plus text-xs!" 
+            size="small"
+            [outlined]="true"
+            severity="secondary"
+            pTooltip="Nueva variable"
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtShowAdd()"
+            />
+        </div>
+      </ng-template>
+      <ng-template #end>
+          <p-iconfield iconPosition="left">
+              <p-inputicon class="pi pi-search text-xs!" />
+              <input #inputFilter type="text" pInputText pSize="small" placeholder="Buscar ..." styleClass="text-xs!" class="text-xs! ps-[30px]!"
+                (input)="evtOnFilter(inputFilter.value)"/>
+          </p-iconfield>
+      </ng-template>
+  </p-toolbar>
+
+
+
+<div class="border-1 rounded-xl border-surface bg-background relative overflow-hidden">
+    @if(loading){<app-loader></app-loader>}
+
+    @if(loading || collection.length === 0){
+        <div class="w-full p-3 px-4 flex justify-center py-[100px]!">
+            <span class="text-gray-500 font-medium">{{ loading ? 'Cargando...' : 'No hay variables de configuración registradas.' }}</span>
+        </div>
+    }
+
+    @if(!loading){
+        @for(variable of collection; track variable.id; let i = $index){
+            <div [id]="variable.id" class="w-full py-6 px-4 border-bottom flex! justify-between hover:bg-gray-900!">
+                <div class="flex flex-col">
+                    <span class="font-normal">{{variable.name}}</span>
+                    <span class="text-xs text-500 font-bold text-gray-600 flex flex-col">
+                        <span class="border-1 text-xs! rounded-md py-[.5px] px-2 mt-1">{{variable.code}}</span>
+                        <span class="mt-1">Registrado: {{ variable.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                    </span>
+                </div>
+                <div class="flex align-middle items-center gap-1">
+                    <button 
+                    pButton 
+                    size="small" 
+                    type="button" 
+                    icon="pi pi-eye" 
+                    class="bg-primary-500/20! p-button-text p-button-primary h-[34px]!"
+                    pTooltip="Ver"
+                    tooltipPosition="top"
+                    tooltipStyleClass="text-xs!"
+                    (click)="evtShowInfo(variable)"
+                    ></button>
+                    <button 
+                    pButton 
+                    size="small" 
+                    type="button" 
+                    icon="pi pi-trash" 
+                    class="bg-red-500/20! p-button-text p-button-danger h-[34px]!"
+                    pTooltip="Eliminar"
+                    tooltipPosition="top"
+                    tooltipStyleClass="text-xs!"
+                    (click)="evtOnDelete(variable)"
+                    ></button>
+                </div>
+            </div>
+            @if(i !== collection.length-1){<p-divider type="solid" class="my-0!" />}
+        }
+    }
+    
+</div>
+
+
+<p-paginator 
+    [first]="first2" 
+    [rows]="rows2" 
+    [totalRecords]="120" 
+    (onPageChange)="onPageChange2($event)"   
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="{first} - {last} of {totalRecords}" 
+    [showPageLinks]="false" 
+    [showFirstLastIcon]="false"
+    class="bg-transparent!"
+></p-paginator>
+
+
+<div class="card flex justify-center">
+    <p-confirmdialog #cd>
+        <ng-template #headless let-message let-onAccept="onAccept" let-onReject="onReject">
+            <div class="flex flex-col items-center p-8 bg-surface-900 rounded-xl">
+                <div
+                    class="rounded-full bg-primary text-primary-contrast inline-flex justify-center items-center h-24 w-24 -mt-20"
+                >
+                    <i class="pi pi-question !text-5xl"></i>
+                </div>
+                <span class="font-semibold text-2xl block mb-2 mt-6">{{ message.header }}</span>
+                <p class="mb-0">{{ message.message }}</p>
+                <div class="flex items-center gap-2 mt-6">
+                    <p-button label="Aceptar" (onClick)="onAccept()" styleClass="w-32"></p-button>
+                    <p-button label="Cancelar" [outlined]="true" (onClick)="onReject()" styleClass="w-32"></p-button>
+                </div>
+            </div>
+        </ng-template>
+    </p-confirmdialog>
+</div>

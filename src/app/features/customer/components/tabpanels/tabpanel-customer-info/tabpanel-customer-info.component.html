@@ -1,0 +1,452 @@
+<div class="flex flex-col gap-2  text-xs!">
+
+    <div class="grid grid-cols-3 gap-2">
+        <div class="col-span-2">
+
+            <div class="grid grid-cols-3 gap-2">
+                <div class="col-span-2">
+                    <p-card class="card-sm border-2 h-full  light:border-gray-100 dark:border-gray-600">
+                        <ng-template #header>
+                            <p class="px-3 py-1 font-light">Información personal</p>
+                        </ng-template>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Primer nombre</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.first_name }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Segundo nombre</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.first_name }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Apellido</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.last_name }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Nacimiento</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.date_birth }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">N° de documento</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.identity_document_number }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Tipo de documento</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light">{{ customer?.identity_document_type }}</span>}
+                            </div>
+                           
+                        </div>
+                    </p-card>
+                </div>
+                <div>
+                    <p-card class="card-sm border-2 h-full  light:border-gray-100 dark:border-gray-600">
+                        <ng-template #header>
+                            <p class="px-3 py-1 font-light">Datos de contacto</p>
+                        </ng-template>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Región</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">Perú</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Email</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{
+                                    <div class="flex items-center gap-1">
+                                        <span class="font-light truncate" [title]="customer?.email">{{ customer?.email }}</span>
+                                        <p-button size="small" 
+                                        icon="pi pi-copy" 
+                                        [outlined]="true" 
+                                        styleClass="p-[1px]! w-[25px]!"
+                                        pTooltip="Copiar" 
+                                        tooltipPosition="top"
+                                        tooltipStyleClass="text-xs! p-1!" 
+                                        placeholder="Top" (click)="util.copy(customer?.email, 'Se copió el email con éxito en el portapapeles.')"/>
+                                    </div>
+                                }
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Ciudad</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">{{ customer?.department }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Teléfono</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{
+                                    <div class="flex items-center gap-1">
+                                       <span class="font-light truncate">({{ customer?.prefix_phone }}) {{ customer?.phone }}</span>
+                                       <p-button size="small" 
+                                        icon="pi pi-copy" 
+                                        [outlined]="true" 
+                                        styleClass="p-[1px]! w-[25px]!"
+                                        pTooltip="Copiar" 
+                                        tooltipPosition="top"
+                                        tooltipStyleClass="text-xs! p-1!" 
+                                        placeholder="Top" (click)="util.copy(`(${ customer?.prefix_phone }) ${ customer?.phone }`, 'Se copió el teléfono con éxito en el portapapeles.')"/>
+                                    </div>
+                                }
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Dirección</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">d</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Dirección adicional</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">Dirección prueba</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Movil</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">{{ customer?.phone }}</span>}
+                            </div>
+                            <div class="flex flex-col gap-0">
+                                <label class="font-semibold text-gray-600">Código Zip</label>
+                                @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                                @else{<span class="font-light truncate">{{ customer?.location_code }}</span>}
+                            </div>
+                        </div>
+                    </p-card>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p-card class="card-sm border-2 h-full dark:border-gray-600">
+                <ng-template #header>
+                    <p class="px-3 py-1 font-light">Información promocional</p>
+                </ng-template>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Está usando Programa de Fidelidad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Activo</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Nivel de Fidelidad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">1</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Punto de lealtad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">XP (Puntos de experiencia)</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Excluido de los bonos</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">No</span>}
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2">
+        <div class="col-span-2">
+            <p-card class="card-sm border-2 h-full bg-amber-50 dark:border-gray-600">
+                <ng-template #header>
+                    <p class="px-3 py-1 font-light">Información de cuenta</p>
+                </ng-template>
+                <div class="grid grid-cols-5 gap-3">
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">ID Jugador</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">{{ customer?.id?.toString()?.padStart(8, '0') }}</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Nombre de usuario</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">{{ customer?.email }}</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">ID Externa</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Estado de la cuenta</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Verificado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Socio</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Fecha de registro</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">{{ customer?.created_at | date: 'dd/MM/yyyy hh:mm' }}</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Balance(PEN)</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">S/ 0.00</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">El casino esta bloqueado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Está bloqueado el deporte</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Estado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Estado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light flex items-center">
+                            @if(!status){
+                                <span class="kt-badge kt-badge-ghost kt-badge-secondary"><span class="kt-badge-dot"></span> Desconectado</span>
+                            }@else {
+                                <span class="kt-badge kt-badge-ghost kt-badge-success"><span class="kt-badge-dot"></span> Conectado</span>
+                            }
+                        </span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">ID Afiliado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">RMT está bloqueado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Grupo juegos</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Tipo de exclusión</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Excluido de</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Excluido hasta</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Perfil del casino</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600 truncate">Es prueba</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Sí</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">BTag</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Código Promocional</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600 truncate">Categoría de jugador personalizada</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Lenguaje</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Español</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Caja</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">El código QR ha sido aplicado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600 truncate">Bloqueo temporal de inicio de sesión incorrecta</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600 truncate">Intentos de inicio de sesión incorrectos</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">RFid</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Título</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600 truncate">Última fecha de inicio de sesión incorrecto</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Fuente de Registro</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Móvil</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">AML Estado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Ninguno</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">TFA</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Activo</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Estado Pep</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Sin seleccionar</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Income Source</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Ninguno</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Teléfono verificado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Teléfono móvil verificado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Ciudadanía</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">ID de niño</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Correo electrónico verificado</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">No</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Residente</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Nombre de nacimiento</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">ID de padres</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Ciudad de nacimiento</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Género</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">{{ customer?.gender }}</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Bandera de socio</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                    <div class="flex flex-col gap-0"></div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Departamento de nacimiento</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light"></span>}
+                    </div>
+                </div>
+            </p-card>
+        </div>
+        <div>
+            <p-card class="card-sm border-2 h-full light:border-gray-100 dark:border-gray-600">
+                <ng-template #header>
+                    <p class="px-3 py-1 font-light">Información promocional</p>
+                </ng-template>
+                <div class="grid grid-cols-2">
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Está usando Programa de Fidelidad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">Activo</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Nivel de Fidelidad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">1</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Punto de lealtad</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">XP (Puntos de experiencia)</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">0</span>}
+                    </div>
+                    <div class="flex flex-col gap-0">
+                        <label class="font-semibold text-gray-600">Excluido de los bonos</label>
+                        @if(loading){<p-skeleton class="h-[20px] w-full mt-1" />}
+                        @else{<span class="font-light">No</span>}
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>
+
+</div>

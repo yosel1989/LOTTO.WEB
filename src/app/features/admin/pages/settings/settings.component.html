@@ -1,0 +1,32 @@
+<div class="kt-container-fixed" id="contentContainer"></div>
+
+<div class="kt-container-fluid">
+    <div class="flex flex-wrap items-center lg:items-end justify-between gap-5 pb-7.5">
+        <div class="flex flex-col justify-center gap-2">
+            <h1 class="text-xl font-medium leading-none text-mono">
+                Configuración
+            </h1>
+            <div class="flex items-center gap-2 text-sm font-normal text-secondary-foreground">
+                Variables, permisos y configuración general
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="kt-container-fluid">
+    <p-card class="p-0! bg-transparent!">
+            <p-tabs lazy scrollable size="small" class="bg-transparent! border-0!" styleClass="bg-transparent! border-0!">
+                <p-tablist class="bg-transparent!">
+                    <p-tab class="text-xs! active py-2!" value="variables" routerLink="/admin/settings/variables">Variables</p-tab>
+                    <p-tab class="text-xs! py-2!" value="permissions" routerLink="/admin/settings/permissions">Permisos</p-tab>
+                    <p-tab class="text-xs! py-2! rounded-t-lg! bg-background" value="profiles" routerLink="/admin/settings/profiles">Perfiles</p-tab>
+                </p-tablist>
+                <p-tabpanels class="bg-transparent!">
+                    <router-outlet></router-outlet>
+                    <p-tabpanel >
+                        
+                    </p-tabpanel>
+                </p-tabpanels>
+            </p-tabs>
+    </p-card>
+</div>

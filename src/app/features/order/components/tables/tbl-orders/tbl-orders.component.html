@@ -1,0 +1,407 @@
+
+<p-card size="small" class="card-sm card-body-empty h-full text-xs!">
+  <ng-template #header>
+      <p class="px-5 py-3 font-normal!">Lista de ordenes</p>
+  </ng-template>
+  <p-toolbar class="rounded-none! border-t-0! border-s-0! border-e-0! border-b-[.5px] dark:border-b-gray-700">
+      <ng-template #start>
+        <div class="flex items-center gap-1">
+            <p-button 
+            size="small"
+            icon="pi pi-angle-left text-xs!" 
+            size="small" 
+            [disabled]="isFirstPage()"
+            [outlined]="true"
+            severity="secondary"
+            pTooltip="Anterior"
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtPrev()"
+            />
+            <p-button icon="pi pi-refresh text-xs!" 
+            size="small"  
+            severity="secondary" 
+            [outlined]="true"
+            pTooltip="Actualizar" 
+            tooltipPosition="top" 
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="reload()"
+            />
+            <p-button 
+            icon="pi pi-angle-right text-xs!" 
+            size="small" 
+            [disabled]="isLastPage()"
+            [outlined]="true"
+            severity="secondary"
+            pTooltip="Siguiente"
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            (click)="evtNext()"
+            />
+            <p-divider layout="vertical" size="small" class="h-[20px]! mx-1!" align="center"/>
+            @if(selected && !hasProfile(profileEnum.SECTORISTA)){
+              <p-button 
+              icon="pi pi-eye text-xs!"  
+              size="small" 
+              severity="warn" 
+              [outlined]="true"
+              pTooltip="Ver detalle" 
+              tooltipPosition="top"
+              tooltipStyleClass="text-xs!"
+              placeholder="Top"
+              styleClass="w-[30px]! h-[30px]!"
+              (click)="evtOnShowInfo()"
+              />
+              <p-button 
+              icon="pi pi-history text-xs!" 
+              size="small"
+              [outlined]="true"
+              severity="warn" 
+              pTooltip="Historial" 
+              tooltipPosition="top"
+              tooltipStyleClass="text-xs!"
+              placeholder="Top"
+              styleClass="w-[30px]! h-[30px]!"
+              placeholder="Top" 
+              (click)="evtShowHistory()"/>
+              <p-button 
+              icon="pi pi-print text-xs!" 
+              size="small"
+              [outlined]="true"
+              severity="warn" 
+              pTooltip="Imprimir Voucher" 
+              tooltipPosition="top"
+              tooltipStyleClass="text-xs!"
+              placeholder="Top"
+              styleClass="w-[30px]! h-[30px]!"
+              placeholder="Top" 
+              (click)="evtPrint()"/>
+
+              @if(hasProfile(1215)){
+              <p-button 
+              icon="pi pi-send text-xs!" 
+              size="small"
+              [outlined]="true"
+              severity="warn" 
+              pTooltip="Notificar" 
+              tooltipPosition="top"
+              tooltipStyleClass="text-xs!"
+              placeholder="Top"
+              styleClass="w-[30px]! h-[30px]!"
+              placeholder="Top" 
+              (click)="evtShowOpNotify($event)"/>
+              }
+              <p-divider layout="vertical" size="small" class="h-[20px]! mx-1!" align="center"/>
+
+
+            }
+            <p-button 
+            icon="pi pi-cloud-download text-xs!" 
+            size="small"
+            [outlined]="true"
+            severity="secondary" 
+            pTooltip="Descargar" 
+            tooltipPosition="top"
+            tooltipStyleClass="text-xs!"
+            placeholder="Top"
+            styleClass="w-[30px]! h-[30px]!"
+            placeholder="Top" 
+            (click)="evtExport()"/>
+        </div>
+      </ng-template>
+      <ng-template #end>
+          <p-iconfield iconPosition="left">
+              <p-inputicon class="pi pi-search text-xs!" />
+              <input #inputFilter type="text" pInputText pSize="small" placeholder="Buscar ..." styleClass="text-xs!" class="text-xs! ps-[30px]!"
+                (input)="evtOnFilter(inputFilter.value)"/>
+          </p-iconfield>
+      </ng-template>
+  </p-toolbar>
+
+  <p-toolbar class="rounded-none! border-t-0! border-s-0! border-e-0! border-b-[.5px] dark:border-b-gray-700">
+      <ng-template #start>
+        <div class="flex items-center gap-1">
+          @if(ldData){
+            <p-skeleton height="27px" width="150px"></p-skeleton>
+            <p-divider layout="vertical" size="small" class="h-[20px]! mx-1!" align="center"/>
+            <p-skeleton height="27px" width="150px"></p-skeleton>
+          }
+          @else{
+            <p-tag>Venta total: {{ total | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</p-tag>
+            <p-divider layout="vertical" size="small" class="h-[20px]! mx-1!" align="center"/>
+            <p-tag severity="success">Total tickets vendidos: {{total_ticket}}</p-tag>
+          }
+        </div>
+      </ng-template>
+      <ng-template #end>
+      </ng-template>
+  </p-toolbar>
+
+  <div class="relative ">
+      @if(ldData){<app-loader class="z-40"></app-loader>}
+      <p-table
+      size="small"
+      #datatable
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+      [showCurrentPageReport]="true"
+      [columns]="cols"
+      [value]="data"
+      [(selection)]="selected"
+      [tableStyle]="{ 'min-width': '100px' }"
+      [scrollable]="true"
+      [showLoader]="false"
+      [resizableColumns]="true"
+      columnResizeMode="expand"
+      showGridlines
+      stripedRows
+      [lazy]="true"
+      [rowHover]="true"
+      [paginator]="true"
+      [rows]="queryParams?.length"
+      [totalRecords]="recordsTotalTable"
+      [rowsPerPageOptions]="[10, 25, 50, 100]"
+      [first]="first"
+      [scrollable]="true"
+      scrollHeight="400px"
+      (onPage)="evtOnPageChange($event)"
+      class="border-0! text-mono! max-w-full!"
+      paginatorDropdownAppendTo="body"
+      paginatorStyleClass="justify-end! text-xs! p-paginator-xs border-t-[.5px] dark:border-t-gray-700 rounded-none">
+          <ng-template #header let-columns>
+              <tr>
+                  <ng-container  *ngFor="let col of columns">
+                    @switch (col.field) {
+                        @case('select'){
+                          <th pFrozenColumn 
+                              class="px-2"></th>
+                        }
+                        @case('nombre'){
+                          <th 
+                          pResizableColumn 
+                          [pSortableColumn]="col.sort ? col.field : undefined" 
+                          
+                          class="text-nowrap font-normal! py-2!">
+                              <div class="flex items-center gap-2">
+                                  {{ col.header }}
+                                  @if(col.sort){<p-sortIcon [field]="col.field" />}
+                              </div>
+                          </th>
+                        }
+                        @default{
+                            <th 
+                            pFrozenColumn 
+                            [frozen]="col.sticky ?? false"
+                            pResizableColumn 
+                            [pSortableColumn]="col.sort ? col.field : undefined" 
+                            class="text-nowrap font-normal! py-2!">
+                              <div class="flex items-center gap-2">
+                                  {{ col.header }}
+                                  @if(col.sort){<p-sortIcon [field]="col.field" />}
+                              </div>
+                          </th>
+                        }
+                    }
+                    
+                  </ng-container>
+              </tr>
+          </ng-template>
+
+          <ng-template #body let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            
+              <ng-container *ngIf="ldData">
+                <tr>
+                  <td *ngFor="let col of columns; let ii = index">
+                    <p-skeleton [width]="ii == 0 ? '20px' : '100%'" height="10px"></p-skeleton>
+                  </td>
+                </tr>
+              </ng-container>
+
+              <ng-container *ngIf="!ldData">
+                  <tr [pSelectableRow]="rowData">
+                    <ng-container *ngFor="let col of columns;">
+                      @switch(col.field){
+                        @case('select'){
+                          <td
+                           pFrozenColumn
+                           class="cursor-pointer py-2! px-2!" >
+                            <p-tableRadioButton
+                            [value]="rowData" 
+                            (click)="evtToggleSelection(rowData)"
+                            class="flex text-center justify-center"/>
+                          </td>
+                        }
+                        @case('id'){
+                          <td 
+                          pFrozenColumn 
+                          [frozen]="col.sticky ?? false"
+                          class="cursor-pointer py-2! px-2!" >
+                           {{ (rowIndex + 1) }}
+                          </td>
+                        }
+                        @case('created_at'){
+                          <td class="text-nowrap py-1! font-light!">{{ utilService.dateFormat(rowData[col.field]!, "dd/MM/yyyy HH:mm:ss a") }}</td>
+                        }
+                        @case('updated_at'){
+                          <td class="text-nowrap py-1! font-light!">{{ utilService.dateFormat(rowData[col.field]!, "dd/MM/yyyy HH:mm a") }}</td>
+                        }
+                        @case('f_ext_sorteo'){
+                          <td class="text-nowrap py-1! font-light!">{{ rowData[col.field] != null ? utilService.dateFormat(rowData[col.field]!, "dd/MM/yyyy HH:mm a") : null }}</td>
+                        }
+                        @case('f_modifico'){
+                          <td class="text-nowrap py-1! font-light!">{{ rowData[col.field] != null ? utilService.dateFormat(rowData[col.field]!, "dd/MM/yyyy HH:mm a") : null }}</td>
+                        }
+                        @case('flag_rifas'){
+                          <td class="text-nowrap py-1! font-light! text-center!">
+                            <i class="pi text-green-400" [ngClass]="{ 'pi-check-circle': rowData[col.field], 'pi-times-circle': !rowData[col.field] }"></i>
+                          </td>
+                        }
+                        @case('precio_rifa'){
+                          <td class="text-nowrap py-1! font-light! text-end!">{{ rowData[col.field] | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</td>
+                        }
+                        @case('numero_min'){
+                          <td class="text-nowrap py-1! font-light! text-center!">{{ rowData[col.field] }}</td>
+                        }
+                        @case('total_tickets'){
+                          <td class="text-nowrap py-1! font-light! text-center!">{{ rowData[col.field] }}</td>
+                        }
+                        @case('numero_max'){
+                          <td class="text-nowrap py-1! font-light! text-center!">{{ rowData | resolvePath:col.field }}</td>
+                        }
+                        @case('total') {
+                          <td class="text-end!">S/ {{ (rowData | resolvePath:col.field).toFixed(2) }}</td>
+                        }
+                        @case('status') {
+                          <td class="text-center!">
+                            @switch(rowData[col.field]){
+                              @case("pagada"){
+                                <p-tag [value]="rowData[col.field]" severity="success" class="w-full font-normal! text-xs!" (click)="evtToggleStatus(rowData, $event)"/>
+                              }
+                              @case("cancelada"){
+                                <p-tag [value]="rowData[col.field]" severity="danger" class="w-full font-normal! text-xs!" (click)="evtToggleStatus(rowData, $event)"/>
+                              }
+                              @case("vencicda"){
+                                <p-tag [value]="rowData[col.field]" severity="secondary" class="w-full font-normal! text-xs!" (click)="evtToggleStatus(rowData, $event)"/>
+                              }
+                              @default(){
+                                <p-tag [value]="rowData[col.field]" severity="secondary" class="w-full font-normal! text-xs!" (click)="evtToggleStatus(rowData, $event)"/>
+                              }
+                            }
+                          </td>
+                        }
+                        @case('transaction.type') {
+                          <td class="text-end!">{{ rowData | resolvePath:col.field }}</td>
+                        }
+                        @case('transaction.reference') {
+                          <td class="text-end!">{{ rowData | resolvePath:col.field }}</td>
+                        }
+                        @case('origen') {
+                          <td class="text-nowrap py-1! text-center!" >{{ rowData[col.field] }}</td>
+                        }
+                        @case('numero') {
+                          <td 
+                          pFrozenColumn 
+                          [frozen]="col.sticky ?? false"
+                          class="text-nowrap py-1! font-light!" >{{ rowData[col.field].toString().padStart(8,'0') }}</td>
+                        }
+                        @default {
+                          <td
+                          pFrozenColumn 
+                          [frozen]="col.sticky ?? false"
+                          class="text-nowrap py-1! font-light!">{{rowData[col.field]}}</td>
+                        }
+                      }
+                    </ng-container>
+                </tr>
+              </ng-container>
+              
+          </ng-template>
+          
+      </p-table>
+
+      <p-popover #op class="text-mono!">
+          <div class="flex flex-col gap-4">
+              <div>
+                  <span class="font-medium block mb-2">Cambiar estado</span>
+                  <ul class="list-none p-0 m-0 flex flex-col">
+                      <li *ngFor="let estado of estados" class="text-center text-nowrap font-bold! uppercase cursor-pointer py-3" [ngClass]="estado.class" (click)="evtOnSelectStatus(estado.value)">
+                          {{ estado.value }}
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </p-popover>
+
+    </div>
+</p-card>
+
+
+<p-menu #menuAcciones 
+        [model]="itemsMenu" 
+        [popup]="true">
+
+  <ng-template #submenuheader let-item>
+      <span class="font-bold text-sm">{{ item.label }}</span>
+  </ng-template>
+
+  <ng-template #item let-item>
+        <div pRipple class="text-sm flex items-center p-menu-item-link cursor-pointer!">
+            <i [class]="item.icon" [ngClass]="'text-[12px]!'"></i>
+            <span class="ml-2">{{ item.label }}</span>
+            <span>{{ item.shortcut }}</span>
+        </div>
+  </ng-template>
+
+</p-menu>
+
+<p-popover #opStatus>
+    <div class="flex flex-col gap-4 text-xs!">
+        <div>
+            <span class="font-light! block mb-2">Cambiar estado</span>
+            <div class="flex flex-col gap-1">
+              <!--<p-tag value="pagada" severity="success" class="w-full font-normal! text-xs! cursor-pointer" (click)="evtChangeStatus('pagada')"/>-->
+              <p-tag value="cancelada" severity="danger" class="w-full font-normal! text-xs! cursor-pointer" (click)="evtChangeStatus('cancelada')"/>
+              <!--<p-tag value="vencida" severity="secondary" class="w-full font-normal! text-xs! cursor-pointer" (click)="evtChangeStatus('vencida')"/>-->
+            </div>
+        </div>
+    </div>
+</p-popover>
+
+<p-popover #opNotify>
+    <div class="flex flex-col gap-4 text-xs!">
+        <div>
+            <span class="font-medium block mb-2">Notificar por</span>
+            <ul class="list-none p-0 m-0 flex flex-col gap-1">
+                <li>
+                  <p-button 
+                  fluid
+                  icon="pi pi-whatsapp text-xs!" 
+                  label="Whatsapp" 
+                  severity="secondary"
+                  size="small"
+                  variant="text"
+                  styleClass="h-[30px]! text-s"
+                  (click)="evtNotify('whatsapp')"
+                  />
+                </li>
+                <li>
+                  <p-button
+                  fluid 
+                  icon="pi pi-envelope text-xs!" 
+                  label="Correo" 
+                  severity="secondary"
+                  size="small"
+                  variant="text"
+                  styleClass="h-[30px]! text-start! justify-start!"
+                  (click)="evtNotify('email')"
+                  />
+                </li>
+            </ul>
+        </div>
+    </div>
+</p-popover>

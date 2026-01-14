@@ -1,0 +1,12 @@
+@if(mode === 'day'){
+    <p-button size="small" icon="pi pi-arrow-left text-xs!" class="text-xs! h-[30px]!" label="Regresar" severity="secondary" (click)="evtReturn()" />
+}
+<p-chart type="doughnut" 
+[data]="data" 
+responsive="true" 
+[options]="options" 
+[class]="styleClass"
+[plugins]="[plugins]"
+></p-chart>
+@if(loading){<app-loader class="z-100!"></app-loader>} 
+  

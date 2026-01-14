@@ -1,0 +1,46 @@
+<div class="relative">
+    @if(loading){
+        <p-skeleton width="100%" height="100px" class="mb-3" />
+        <p-skeleton width="100%" height="100px" class="mb-3" />
+        <p-skeleton width="100%" height="100px" class="mb-3" />
+        <p-skeleton width="100%" height="100px" class="mb-3" />
+        <p-skeleton width="100%" height="100px" class="mb-3" />
+    }@else{
+        <p-timeline 
+        [value]="collection" 
+        align="left"
+        oppositeTemplate="null"
+        class="w-full">
+            <ng-template #content let-data>
+                {{data.reason.reason}}
+                <p-card class="text-xs! bg-neutral-950! rounded-lg! my-2">
+                    <div class="flex flex-col">
+                        <div class="text-gray-400">Fecha registro:</div>
+                        <div class="ps-5">{{ data.created_at | date: 'dd/MM/yyyy HH:mm:ss a' }}</div>
+                    </div>
+                    <div class="flex flex-col">
+                        <div class="text-gray-400">Descripción:</div>
+                        <div class="ps-5">{{ data.description }}</div>
+                    </div>
+                    @if(data.user_created){
+                        <div class="flex flex-col">
+                            <div class="text-gray-400">Usuario registró:</div>
+                            <div class="ps-5">{{ data.user_created }}</div>
+                        </div>
+                    }
+                    @if(data.reason_id === 2){
+                        <div class="flex flex-col">
+                            <div class="text-gray-400">Anterior valor:</div>
+                            <div class="ps-5">{{ data.previous_data }}</div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="text-gray-400">Nuevo valor:</div>
+                            <div class="ps-5">{{ data.new_data }}</div>
+                        </div>
+                    }
+                    
+                </p-card>
+            </ng-template>
+        </p-timeline>
+    }
+</div>

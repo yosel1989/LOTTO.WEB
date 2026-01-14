@@ -1,0 +1,77 @@
+<div class="relative">
+    @if(loading){
+        <p-skeleton width="100%" height="60px" class="mb-3" />
+
+        <p-skeleton width="100px" height="10px" class="mb-3" ></p-skeleton>
+
+        <p-skeleton width="100%" height="20px" class="mb-1" />
+        <p-skeleton width="100%" height="20px" class="mb-1" />
+        <p-skeleton width="100%" height="20px" class="mb-1" />
+        <p-skeleton width="100%" height="20px" class="mb-1" />
+        <p-skeleton width="100%" height="20px" class="mb-1" />
+    }
+    @else {
+        <p-card class="border-amber-300! border mb-3">
+            <div class="text-center font-semibold text-amber-500 mb-2"> {{ data.customer }} </div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="text-gray-400">N° Orden: {{info?.numero?.toString()?.padStart(8,'0')}}</div>
+                <div class=>
+                    @switch(info?.estado){
+                        @case("pagada"){
+                        <p-tag severity="success" class="font-normal! text-xs!">{{ info?.estado }}</p-tag>
+                        }
+                        @case("cancelada"){
+                        <p-tag severity="danger" class="font-normal! text-xs!">{{ info?.estado }}</p-tag>
+                        }
+                        @case("vencicda"){
+                        <p-tag severity="secondary" class="font-normal! text-xs!">{{ info?.estado }}</p-tag>
+                        }
+                        @default(){
+                        <p-tag severity="secondary" class="font-normal! text-xs!">{{ info?.estado }}</p-tag>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="flex flex-row items-center justify-between text-gray-400">
+                <div>Total: {{info?.total | currency:'PEN':'symbol':'1.2-2':'es-PE'}}</div>
+            </div>
+            <div class="flex flex-row items-center justify-between text-gray-400">
+                <div>Total de tickets: {{info?.detail?.length}}</div>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="text-gray-400">Origen</div>
+                <div>
+                    <p-tag severity="secondary" class="font-normal! text-xs!">{{ info?.origen }}</p-tag>
+                </div>
+            </div>
+        </p-card>
+
+        <div class="border border-gray-300 rounded-md p-3 mb-3">
+            <p-scrollpanel [style]="{ width: '100%', height: '150px' }" >
+                @for (item of info?.detail; track $index) {
+                    <div class="grid grid-cols-2 items-center">
+                        <div>{{ item.lotteryTicket.numero }}</div>
+                        <div class="text-end">
+                            @switch(item.lotteryTicket.status){
+                                @case("pagada"){
+                                <p-tag severity="success" class="font-normal! text-xs!">{{ item.lotteryTicket.status }}</p-tag>
+                                }
+                                @case("cancelada"){
+                                <p-tag severity="danger" class="font-normal! text-xs!">{{ item.lotteryTicket.status }}</p-tag>
+                                }
+                                @case("vencicda"){
+                                <p-tag severity="secondary" class="font-normal! text-xs!">{{ item.lotteryTicket.status }}</p-tag>
+                                }
+                                @default(){
+                                <p-tag severity="secondary" class="font-normal! text-xs!">{{ item.lotteryTicket.status }}</p-tag>
+                                }
+                            }
+                        </div>
+                    </div>
+                    @if($index < (info?.detail?.length! - 1)){<p-divider class="my-1!"/>}
+                }
+            </p-scrollpanel>
+        </div>
+    }
+    
+</div>

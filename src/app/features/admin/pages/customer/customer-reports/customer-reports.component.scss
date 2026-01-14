@@ -1,0 +1,23 @@
+::ng-deep p-tabs.vertical {
+  display: flex;
+  flex-direction: row;
+}
+
+::ng-deep p-tabs.vertical p-tablist {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  border-right: 1px solid #ccc;
+}
+
+::ng-deep p-tabs.vertical p-tabpanels {
+  flex: 1;
+  padding-left: 1rem;
+}
+
+::ng-deep .tablist-vertical{
+    .p-tablist-tab-list{
+        flex-direction: column !important;
+        align-items: flex-start;    
+    }
+}

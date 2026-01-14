@@ -1,0 +1,42 @@
+<div class="card text-xs!">
+    <p-panel [toggleable]="true" class="text-xs! rounded-xl! border-none!">
+        <ng-template #header>
+            Busqueda avanzada
+        </ng-template>
+        <form class="border-t-3 border-t-gray-600">
+            <div class="grid grid-cols-1 sm:grid-cols-2! md:grid-cols-4! xl:grid-cols-6! gap-2 pt-3">
+                
+                <div>
+                    <div class="flex flex-col gap-1">
+                        <label class="font-normal">
+                        Fecha
+                        </label>
+                        <app-flt-order-to-charity-created-at-tbl 
+                        #createdAtFilter 
+                        title="Filtrar fecha"
+                        column="created_at"
+                        (OnValuesChange)="evtChangeValuesFilters($event)"></app-flt-order-to-charity-created-at-tbl>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex flex-row gap-1 mt-3">
+                <p-button 
+                size="small"
+                outlined="true"
+                severity="danger"
+                icon="pi pi-filter-slash" 
+                label="Limpiar todo" 
+                styleClass="h-[30px]!"
+                pTooltip="Quitar filtros" 
+                tooltipPosition="top"
+                tooltipStyleClass="text-xs!"
+                placeholder="Top"
+                (click)="evtClearAll()"></p-button>
+            </div>  
+        </form>
+        
+    </p-panel>
+</div>
+

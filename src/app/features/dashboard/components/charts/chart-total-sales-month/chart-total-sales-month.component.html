@@ -1,0 +1,22 @@
+<div class="flex justify-end">
+    <p-select 
+    size="small"
+    [formControl]="ctrlMonth"
+    [options]="months"  
+    placeholder="Todo" 
+    optionLabel="name" 
+    optionValue="id" 
+    class="text-xs h-[30px]!" 
+    panelStyleClass="text-xs"
+    showClear="true"
+    ></p-select>
+</div>
+
+<p-chart type="bar" 
+[data]="data" 
+responsive="true" 
+[options]="options" 
+[class]="styleClass" 
+></p-chart>
+@if(loading){<app-loader class="z-100!"></app-loader>} 
+  

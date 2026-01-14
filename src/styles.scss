@@ -1,0 +1,102 @@
+@use "./tailwind";
+
+/* You can add global styles to this file, and also import other style files */
+
+.p-card{
+  overflow: hidden !important;
+}
+
+.p-card-body,
+.p-panel{
+  background: radial-gradient(circle, rgb(24, 24, 27) 0%, rgb(42 41 41) 0%, rgb(24, 24, 27) 100%) !important;
+}
+
+.p-card.card-sm{
+    .p-card-body{
+        @apply p-0! border-t-4!;
+        @media (prefers-color-scheme: dark) {
+          border-color: var(--background);
+        }
+    }
+}
+
+.p-tooltip {
+  .p-tooltip-text,
+  .p-tooltip-arrow{
+    @apply dark:bg-gray-900!;
+  }
+}
+
+.p-tooltip-arrow{
+    @apply dark:border-t-gray-900!;
+}
+
+#text-xs,
+::ng-deep .p-select-filter{
+  @apply text-xs!;
+}
+
+p-select.text-xs{
+  .p-select-label{
+    @apply text-xs! py-1!
+  } 
+}
+p-message.text-xs{
+  .p-message-text{
+    @apply text-xs!
+  }
+}
+
+.p-paginator-xs{
+
+  @apply border-t-1! border-t-gray-800!;
+
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last,
+  .p-paginator-first,
+  .p-paginator-page{
+    @apply h-[30px]! w-[30px]! min-w-[30px]! text-xs! px-0! rounded-sm!;
+  }
+
+  .p-select-label,
+  .p-select-dropdown{
+    @apply text-xs!
+  }
+
+}
+
+.p-card-sm{
+  .p-card-body{
+    @apply p-3!;
+  }
+}
+
+.card-body-empty{
+  .p-card-body{
+    @apply p-0!;
+  }
+}
+
+
+.border-inside{
+  table{
+    tr >:first-child{
+      border-left-width: 0 !important;
+    }
+    tr >:last-child{
+      border-right-width: 0 !important;
+    }
+    thead{
+      tr > *{
+        border-top-width: 0 !important;
+      }
+    }
+  }
+}
+
+
+
+.swal2-container{
+  z-index: 9999999 !important;
+}

@@ -1,0 +1,6 @@
+.page-bg {
+    background-image: url('assets/media/images/2600x1200/bg-10.png');
+}
+:host-context(.dark) .page-bg {
+    background-image: url('assets/media/images/2600x1200/bg-10-dark.png');
+}
